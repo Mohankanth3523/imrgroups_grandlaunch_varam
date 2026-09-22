@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply text-brown font-sans font-light antialiased;
+    /* Deep backdrop surrounding the invitation card on wider viewports;
+       the card itself (see App.tsx) stays full-bleed ivory on phones. */
+    background: linear-gradient(160deg, #081e2e 0%, #0b3049 100%);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Gold shimmer text used for hero "GRAND LAUNCH" and other accents */
+  .text-gold-shimmer {
+    background-image: linear-gradient(
+      100deg,
+      theme("colors.gold.deep") 0%,
+      theme("colors.gold.light") 25%,
+      theme("colors.gold.DEFAULT") 50%,
+      theme("colors.gold.light") 75%,
+      theme("colors.gold.deep") 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .eyebrow {
+    @apply font-display text-[11px] font-medium uppercase tracking-[0.35em] text-gold-deep;
+  }
+
+  .section-title {
+    @apply font-display text-[26px] font-semibold tracking-wide text-maroon mt-1.5;
+  }
+
+  .section-sub {
+    @apply font-script italic text-[17px] text-brown-soft mt-2 leading-relaxed;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-gold
+      px-7 py-4 font-display text-[12.5px] font-semibold uppercase tracking-[0.16em]
+      transition-transform duration-300 active:scale-[0.97];
+  }
+
+  .btn-gold {
+    @apply text-cream border-gold shadow-plate;
+    background-image: linear-gradient(
+      135deg,
+      theme("colors.gold.deep"),
+      theme("colors.gold.DEFAULT") 45%,
+      theme("colors.gold.light") 100%
+    );
+    box-shadow: 0 12px 30px -10px rgba(11, 111, 163, 0.65);
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-maroon;
+  }
+
+  .ornament-divider {
+    @apply mx-auto my-4 flex w-full items-center justify-center gap-2.5;
+  }
+  .ornament-divider .line {
+    @apply h-px w-11;
+    background-image: linear-gradient(90deg, transparent, theme("colors.gold.DEFAULT"), transparent);
+  }
+}
+
+@layer utilities {
+  .bg-glow {
+    background:
+      radial-gradient(60% 40% at 15% 8%, rgba(28, 163, 224, 0.16), transparent 60%),
+      radial-gradient(55% 35% at 90% 12%, rgba(220, 239, 250, 0.65), transparent 60%),
+      radial-gradient(70% 45% at 50% 100%, rgba(28, 163, 224, 0.1), transparent 60%),
+      linear-gradient(180deg, #ffffff 0%, #f5fafc 40%, #dceffa 100%);
+  }
+
+  /* App shell on tablet/desktop: a centred, framed card instead of an
+     edge-to-edge phone layout. Phones (below 640px) are unaffected. */
+  .app-shell {
+    background: #f5fafc;
+  }
+  @media (min-width: 640px) {
+    body {
+      padding: 40px 16px;
+    }
+    .app-shell {
+      min-height: auto !important;
+      border-radius: 28px;
+      box-shadow:
+        0 40px 120px -20px rgba(11, 48, 73, 0.45),
+        0 0 0 1px rgba(28, 163, 224, 0.15);
+    }
+  }
+
+  /* Small-phone safety (320–359px): a couple of elements need a touch
+     more breathing room / a smaller cap at the narrowest supported width. */
+  @media (max-width: 359px) {
+    .hero-eyebrow-text {
+      font-size: 14px;
+    }
+  }
+}

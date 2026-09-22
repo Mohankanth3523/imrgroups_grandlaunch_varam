@@ -1,0 +1,25 @@
+# Cloudflare Pages headers — https://developers.cloudflare.com/pages/configuration/headers/
+
+# Baseline security headers for every response.
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=()
+
+# Vite's hashed JS/CSS bundles (dist/assets/index-<hash>.js etc.) are safe to
+# cache forever — a content change always ships under a new filename.
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Supplied site-plan images and the logo are static and long-lived; if they
+# are ever replaced, rename the file (or bump a ?v= query string) to bust
+# this cache rather than relying on a short max-age.
+/assets/*.jpg
+  Cache-Control: public, max-age=604800
+/assets/*.webp
+  Cache-Control: public, max-age=604800
+/assets/*.png
+  Cache-Control: public, max-age=604800
