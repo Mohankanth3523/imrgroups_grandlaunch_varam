@@ -30,43 +30,58 @@ export function StickyBar() {
         onViewportLeave={() => setVisible(true)}
       />
 
-      <AnimatePresence>
-        {visible && (
-          <motion.div
-            className="fixed bottom-4 left-1/2 z-50 flex w-[calc(100%-32px)] max-w-[calc(480px-32px)] -translate-x-1/2 gap-2 rounded-full border border-gold/40 bg-brown/95 p-2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.45)] backdrop-blur"
-            initial={{ y: "140%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "140%" }}
-            transition={{ duration: 0.5, ease: [0.2, 0.9, 0.2, 1] }}
-          >
-            <a
-              href={project.contact.telHref}
-              className="flex flex-1 flex-col items-center gap-1 rounded-full px-1 py-2.5 text-[8.5px] font-medium uppercase tracking-wide text-gold-pale active:scale-95"
+      {/*
+        IMPORTANT: horizontal centering (left-1/2 + -translate-x-1/2) lives
+        on this plain, un-animated wrapper — never on the motion.div below.
+        Framer Motion writes the `transform` CSS property directly as an
+        inline style the moment it animates ANY of x/y/scale/rotate, which
+        completely replaces Tailwind's translate utilities (they compose
+        into that same `transform` property via CSS custom properties).
+        Putting the slide animation and the centering translate on the same
+        element means the animation silently deletes the centering the
+        instant it starts — which is exactly why this bar used to hang off
+        the right edge of the screen instead of staying centered. Splitting
+        them onto two elements keeps both intact.
+      */}
+      <div className="fixed bottom-[calc(16px+env(safe-area-inset-bottom,0px))] left-1/2 z-50 w-[calc(100%-32px)] max-w-[calc(480px-32px)] -translate-x-1/2">
+        <AnimatePresence>
+          {visible && (
+            <motion.div
+              className="flex gap-2 rounded-full border border-gold/40 bg-brown/95 p-2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.45)] backdrop-blur"
+              initial={{ y: "140%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "140%" }}
+              transition={{ duration: 0.5, ease: [0.2, 0.9, 0.2, 1] }}
             >
-              <Phone className="h-[18px] w-[18px]" strokeWidth={2} />
-              Call
-            </a>
-            <a
-              href={project.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-1 flex-col items-center gap-1 rounded-full px-1 py-2.5 text-[8.5px] font-medium uppercase tracking-wide text-gold-pale active:scale-95"
-            >
-              <Navigation className="h-[18px] w-[18px]" strokeWidth={2} />
-              Directions
-            </a>
-            <a
-              href={project.whatsapp.general}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-1 flex-col items-center gap-1 rounded-full bg-gradient-to-br from-gold-deep to-gold px-1 py-2.5 text-[8.5px] font-medium uppercase tracking-wide text-brown active:scale-95"
-            >
-              <WhatsAppIcon className="h-[18px] w-[18px]" />
-              WhatsApp
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <a
+                href={project.contact.telHref}
+                className="flex flex-1 flex-col items-center gap-1 rounded-full px-1 py-2.5 text-[8.5px] font-medium uppercase tracking-wide text-gold-pale active:scale-95"
+              >
+                <Phone className="h-[18px] w-[18px]" strokeWidth={2} />
+                Call
+              </a>
+              <a
+                href={project.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-1 flex-col items-center gap-1 rounded-full px-1 py-2.5 text-[8.5px] font-medium uppercase tracking-wide text-gold-pale active:scale-95"
+              >
+                <Navigation className="h-[18px] w-[18px]" strokeWidth={2} />
+                Directions
+              </a>
+              <a
+                href={project.whatsapp.general}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-1 flex-col items-center gap-1 rounded-full bg-gradient-to-br from-gold-deep to-gold px-1 py-2.5 text-[8.5px] font-medium uppercase tracking-wide text-brown active:scale-95"
+              >
+                <WhatsAppIcon className="h-[18px] w-[18px]" />
+                WhatsApp
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }

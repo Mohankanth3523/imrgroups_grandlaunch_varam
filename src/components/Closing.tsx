@@ -88,6 +88,26 @@ export function Closing() {
         <br />
         &copy; {new Date().getFullYear()} {project.developer}. This is an invitation for the Grand
         Launch event; not an offer of sale.
+        <div className="mt-3.5 border-t border-cream/[0.12] pt-3.5 text-[12px] uppercase tracking-[0.1em] text-cream/50">
+          Powered by{" "}
+          <a
+            href="https://wa.me/918838935124?text=Hi%2C%20I%20came%20across%20this%20website%20and%20I%27m%20interested%20in%20getting%20a%20similar%20website%20built."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-gold-light/90 underline"
+          >
+            mkzora
+          </a>{" "}
+          ·{" "}
+          <a
+            href="https://wa.me/918838935124?text=Hi%2C%20I%20came%20across%20this%20website%20and%20I%27m%20interested%20in%20getting%20a%20similar%20website%20built."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-gold-light/90 underline"
+          >
+            88389 35124
+          </a>
+        </div>
       </footer>
     </>
   );
